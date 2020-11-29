@@ -8,7 +8,7 @@ function plotCha() {
   bubChart(valueDrop);
 }
 
-function samData(sample){
+function buildMetadata(sample){
 
   d3.json("samples.json").then((data) => {
     var metadata = data.metadata;
@@ -16,8 +16,14 @@ function samData(sample){
     var sData = metadata.filter(
       (sData) => sData.id == sample
     );
-      console.log(sData);
-    //var id = sdata.id;
+    console.log(sData[0]);
+    var res = sData[0];
+    var Panel = d3.select("#sample-metadata");
+    Panel.html("");
+    
+  });
+
+  //var id = sdata.id;
     //var ethnicity = sdata.metadata.ethnicity;
     //var gender = sdata.metadata.gender;
     //var age = sdata.metadata.age;
@@ -25,8 +31,7 @@ function samData(sample){
     //var bbtype = sdata.metadata.bbtype;
     //var wfreq = sdata.metadata.wfreq;
     //console.log(sdata.metadata.column_names);
-  });
-
+  
   //var trace1 ={
     //type: "bar",
 
@@ -40,3 +45,5 @@ function samData(sample){
   //  type
   //}
 };
+
+
