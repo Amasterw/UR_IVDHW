@@ -60,7 +60,31 @@ function dFunt(valueDrop){
 function dPa(valueDrop){
   var filterBu = data.samples.filter(value => value.id == valueDrop);
   var otid = filterBu.map(v => v.out_ids)
-  
+  otid = otid[0];
+  var otCt = filterBu.map(v => v.sample_values);
+  otCt = otCt[0]
+  var otLl = filterBu.map(v => v.out_labels);
+  otLl - labelSelect(otLl[0]);
+
+  var trace2 = {
+    x: otid,
+    y: otCt,
+    text: otLl,
+    mode: "markers",
+    marker: {
+      color: otid,
+      size: otCt,
+      colorscale: "Hot"
+    },
+  };
+
+  var layout ={
+    xaxis: { title: "OTU"}
+  };
+
+  var traceData2 = [trace2];
+
+  Plotly.newplot("bubble", traceData2, layout);
 }
   //var trace2 = {
   //  type: "bubble"
