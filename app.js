@@ -3,7 +3,7 @@ d3.selectAll("#selDataset").on("change", plotCha);
 
 function plotCha() {
   var valueDrop = d3.select("#selDataset").node().value;
-  dFunt(valueDrop);
+  buildMetadata(valueDrop);
   dPa(valueDrop);
   bubChart(valueDrop);
 }
@@ -27,7 +27,7 @@ function buildMetadata(sample){
     });
   });
 
-function dFunt(valueDrop){
+function dPa(valueDrop){
   var filterB = data.samples.filter(value => value.id == valueDrop);
   var otid = filterB.map(v => v.out_ids);
   otid = idSelect(otid[0].slice(0,10));
@@ -57,7 +57,7 @@ function dFunt(valueDrop){
   Plotly.newplot("bar", tracedata, layout);
 };
 
-function dPa(valueDrop){
+function bubChart(valueDrop){
   var filterBu = data.samples.filter(value => value.id == valueDrop);
   var otid = filterBu.map(v => v.out_ids)
   otid = otid[0];
@@ -85,11 +85,28 @@ function dPa(valueDrop){
   var traceData2 = [trace2];
 
   Plotly.newplot("bubble", traceData2, layout);
-}
-  //var trace2 = {
-  //  type: "bubble"
-  //}
+};
 
-  //var trace2 = {
-  //  type
-  //}
+function init() {
+  var selectO = d3.select("#selDataset");
+
+  d3.json("samples.json").then(sample => {
+    data = sample;
+
+    var selectValues = sample.names;
+    
+    selectValues.forEach(value => {
+      selectO 
+      .append("option")
+      .text(sample)
+      .property("value", sample);
+    });
+
+    var valueDrop = selectValues[0];
+    buildMetadata(valueDrop);
+    dPa(valueDrop);
+    bubChart(valueDrop);
+  });
+}
+
+init();
