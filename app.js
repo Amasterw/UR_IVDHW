@@ -21,22 +21,47 @@ function buildMetadata(sample){
     var Panel = d3.select("#sample-metadata");
     Panel.html("");
     
+    Object.entries(res).forEach(([key, value]) => {
+      Panel.append("h5")
+      .text(`${key.toUpperCase()}:${value}`);
+    });
   });
 
-  //var id = sdata.id;
-    //var ethnicity = sdata.metadata.ethnicity;
-    //var gender = sdata.metadata.gender;
-    //var age = sdata.metadata.age;
-    //var location = sdata.metadata.location;
-    //var bbtype = sdata.metadata.bbtype;
-    //var wfreq = sdata.metadata.wfreq;
-    //console.log(sdata.metadata.column_names);
+function dFunt(valueDrop){
+  var filterB = data.samples.filter(value => value.id == valueDrop);
+  var otid = filterB.map(v => v.out_ids);
+  otid = idSelect(otid[0].slice(0,10));
+
+  var otCt = filterB.map(v => v.sample_values);
+  otCt = otCt[0].slice(0,10);
   
-  //var trace1 ={
-    //type: "bar",
+  var otLl = filterB.map(v => v.out_labels);
+  var names = labelSelect(otLl[0]).slice(0,10);
 
-  //}
+  var trace1 ={
+    x: otCt,
+    y: otid,
+    text: names,
+    type: "bar",
+    orientation: "h"
+  };
+  
+   var layout ={
+     yaxis: {
+       autorange: "reversed"
+     }
+   };
 
+   var tracedata =[trace1];
+
+  Plotly.newplot("bar", tracedata, layout);
+};
+
+function dPa(valueDrop){
+  var filterBu = data.samples.filter(value => value.id == valueDrop);
+  var otid = filterBu.map(v => v.out_ids)
+  
+}
   //var trace2 = {
   //  type: "bubble"
   //}
@@ -44,6 +69,3 @@ function buildMetadata(sample){
   //var trace2 = {
   //  type
   //}
-};
-
-
